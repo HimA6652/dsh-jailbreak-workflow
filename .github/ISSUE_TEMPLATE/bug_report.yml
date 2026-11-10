@@ -1,0 +1,53 @@
+name: 问题反馈 / Bug report
+description: 装不上、工具不出现、画布或执行出问题
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        带上版本信息能快很多。附件不支持 zip 压缩包——文本请直接粘贴，图片可以直接拖进来。
+  - type: dropdown
+    id: host
+    attributes:
+      label: 使用端 / Where
+      options:
+        - 网页版（dsh web）
+        - 桌面端
+        - 两端都有
+    validations:
+      required: true
+  - type: input
+    id: dsh-version
+    attributes:
+      label: DeepSeek Harness 版本 / DSH version
+      description: 例如 0.2.1-rc.2。`dsh --version` 可查。
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: 插件版本 / Plugin version
+      description: 例如 0.11.0。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤 / Steps to reproduce
+      description: 从安装（或打开哪个工作流）开始，一步步写到出问题。
+      placeholder: |
+        1. …
+        2. …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果与实际结果 / Expected vs actual
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 截图或日志 / Screenshots or logs
+      description: 图片可直接粘贴；控制台报错请贴文字。

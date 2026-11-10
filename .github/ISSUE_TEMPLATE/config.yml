@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用问题先看 README 常见问题
+    url: https://github.com/Minglink/dsh-jailbreak-workflow#-常见问题
+    about: 安装后没有「工作流」标签页、大图卡顿、模型配置等常见问题都有现成答案。
+  - name: 破甲技术交流论坛
+    url: https://openorigin.link/
+    about: 破甲词制作与使用心得交流（邀请码见 README）。
