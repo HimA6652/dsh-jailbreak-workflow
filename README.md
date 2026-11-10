@@ -8,12 +8,15 @@
 
 <div align="center">
 
-简体中文 | [English](./README.en.md)
-破甲技术交流论坛：https://openorigin.link/    邀请码：CESFAVBR
+简体中文 | [English](./README.en.md) · [破甲技术交流论坛](https://openorigin.link/)（邀请码 `CESFAVBR`）
+
+[![npm](https://img.shields.io/npm/v/@xiaoso/dsh-workflow-lite.svg)](https://www.npmjs.com/package/@xiaoso/dsh-workflow-lite) [![node](https://img.shields.io/badge/node-22%2B-339933.svg)](https://nodejs.org) [![DeepSeek Harness 0.2.x](https://img.shields.io/badge/DeepSeek%20Harness-0.2.x-4d6bfe.svg)](https://github.com/deepseek-ai/deepseek-harness) [![workflow packs](https://img.shields.io/badge/workflow%20packs-dsh--workflows-3e7ce4.svg)](https://github.com/Minglink/dsh-workflows)
+
+</div>
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的软工作流插件：**在画布上设计流程，编译成一份计划提示词，交给模型按计划执行。**
 
-连线可以带**任意条件**，顺序、并行、汇合、分支、循环、回退全都支持——插件里没有执行引擎，一切由当前会话中的模型完成。
+连线可以带**任意条件**，顺序、并行、汇合、分支、循环、回退全都支持——插件里没有执行引擎，一切由当前会话中的模型完成。适合把能画成步骤图的活都交给它跑：多步编码任务、研究流水线、内容生产流水线；几百步的大图拖拽、平移照样满帧。
 
 > [!TIP]
 > **工作流合集**：[Minglink/dsh-workflows](https://github.com/Minglink/dsh-workflows)——现成的 `.wflite.zip` 工作流包，下载导入即用，已上架「破甲制作」研究流水线（见下文 [📋 支持的工作流](#-支持的工作流)）。
@@ -46,7 +49,17 @@
 
 ## 📦 安装
 
-适配 DeepSeek Harness 0.2.0 与 0.2.1，包括它们的各个预览版（如 0.2.1-rc.2）。
+适配 DeepSeek Harness 0.2.x 的正式版；0.2.0 与 0.2.1 连预览版（rc、beta）一起支持。
+
+| 你的 DeepSeek Harness | 能否安装 |
+|---|---|
+| 0.2.0 / 0.2.1 正式版 | ✅ 直接装 |
+| 0.2.0 / 0.2.1 预览版（rc、beta） | ✅ 直接装 |
+| 0.2.2 起的预览版 | 以当期支持为准，装不上等插件跟进一步 |
+| 0.3 及以上 | 尚未适配 |
+
+> [!TIP]
+> 装完没出现「工作流」标签页：多半是 DSH 版本对不上——宿主对不上时会**静默跳过**插件，不报错。先核对上表，再到「插件」页确认插件已启用、重启 DSH；还不行就带版本信息[提 issue](https://github.com/Minglink/dsh-jailbreak-workflow/issues/new?template=bug_report.yml)。
 
 ### 网页版
 
@@ -130,6 +143,23 @@ dsh web
 记忆只是一个快捷配置。需要更复杂的玩法时，建议自己用「资源」加提示词实现。
 
 **效果还在验证，欢迎反馈。** 早期在同一个工作流上重复执行的试验里没有看到稳定的提速，后来加入了「快速路径」，是否有用需要更多真实的工作流来检验。
+
+## ❓ 常见问题
+
+**装完没有「工作流」标签页？**
+见[安装](#-安装)一节的排查提示：先核对 DSH 版本，再确认插件已启用并重启 DSH。
+
+**步骤很多的工作流会卡吗？**
+不会。大图专门优化过：几百个步骤的工作流拖拽、平移保持满帧，打开约半秒；改提示词、改状态时画布不再整张重算。
+
+**执行用的是哪个模型？要另配 API 吗？**
+插件自己不调用模型，也不挑模型：执行者是当前 DSH 会话里配置的模型。把 Codex、Claude Code 这类订阅工具接进执行环境的想法正在跟进（[#3](https://github.com/Minglink/dsh-jailbreak-workflow/issues/3)）。
+
+**工作流和产出存在哪里？**
+跟随工作流的文件默认在 `~/.dsh/workflow-lite/assets/<工作流名>/`，改名、导出时一起带走；每次执行的产出按「产出根目录」落盘，默认是当前工作区的 `.workflow-lite/runs/<实例>/out`。详见[路径变量](#-路径变量)。
+
+**它和 dsh-workflows 什么关系？**
+本仓库是插件（画布与编译），[dsh-workflows](https://github.com/Minglink/dsh-workflows) 是现成工作流合集；装好插件后从合集下载 `.wflite.zip`，在「工作流中心」导入即用。
 
 ## ⚙️ 工作原理
 

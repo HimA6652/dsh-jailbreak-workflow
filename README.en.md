@@ -14,6 +14,7 @@
 
 <div align="center">
 
+[![npm](https://img.shields.io/npm/v/@xiaoso/dsh-workflow-lite.svg)](https://www.npmjs.com/package/@xiaoso/dsh-workflow-lite)
 [![node](https://img.shields.io/badge/node-22%2B-339933.svg)](https://nodejs.org)
 [![DeepSeek Harness 0.2.x](https://img.shields.io/badge/DeepSeek%20Harness-0.2.x-4d6bfe.svg)](https://github.com/deepseek-ai/deepseek-harness)
 [![workflow packs](https://img.shields.io/badge/workflow%20packs-dsh--workflows-3e7ce4.svg)](https://github.com/Minglink/dsh-workflows)
@@ -22,7 +23,7 @@
 
 A soft-workflow plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): **design a flow on a canvas, compile it into one plan prompt, and let the model carry it out.**
 
-Edges can carry **any condition**, and flows can be sequential, parallel, joined, conditionally branched, looped or rolled back — the plugin ships no execution engine; everything is done by the model in your current session.
+Edges can carry **any condition**, and flows can be sequential, parallel, joined, conditionally branched, looped or rolled back — the plugin ships no execution engine; everything is done by the model in your current session. Hand it any work you can draw as a step graph: multi-step coding jobs, research pipelines, content pipelines. Canvases with hundreds of steps still drag and pan at full frame rate.
 
 > [!TIP]
 > **Workflow packs**: [Minglink/dsh-workflows](https://github.com/Minglink/dsh-workflows) — ready-to-import `.wflite.zip` workflow packs; the "破甲制作" research pipeline is already up (see [📋 Available workflows](#-available-workflows) below).
@@ -55,7 +56,17 @@ The "破甲制作" research pipeline on the canvas — 15 steps chained into one
 
 ## 📦 Install
 
-Works with DeepSeek Harness 0.2.0 and 0.2.1, including their preview builds (such as 0.2.1-rc.2).
+Works with DeepSeek Harness 0.2.x stable builds; 0.2.0 and 0.2.1 are supported including their preview builds (rc, beta).
+
+| Your DeepSeek Harness | Install |
+|---|---|
+| 0.2.0 / 0.2.1 stable | ✅ |
+| 0.2.0 / 0.2.1 previews (rc, beta) | ✅ |
+| Previews from 0.2.2 on | supported as of the latest release; if blocked, wait for the next plugin release |
+| 0.3 and later | not yet |
+
+> [!TIP]
+> No **Workflow** tab after installing? Most likely the DSH version didn't match — the host **silently skips** the plugin instead of raising an error. Check the table above, confirm the plugin is enabled on the Plugins page, and restart DSH; if it still doesn't show, [open an issue](https://github.com/Minglink/dsh-jailbreak-workflow/issues/new?template=bug_report.yml) with your version info.
 
 ### Web
 
@@ -139,6 +150,23 @@ Lets a workflow keep what worked and follow it on the next run, with the aim of 
 Memory is only a configuration shortcut. For anything more elaborate, build it yourself with a resource plus prompts.
 
 **We are still checking whether it helps, and we'd like your feedback.** In early trials that repeated one workflow, we saw no steady speedup; the "Quick path" was added afterwards, and whether it helps needs more real workflows to tell.
+
+## ❓ FAQ
+
+**No Workflow tab after installing?**
+See the troubleshooting tip under [Install](#-install): check the DSH version first, then confirm the plugin is enabled and restart DSH.
+
+**Do large workflows lag?**
+No. Big canvases got dedicated performance work: workflows with hundreds of steps drag and pan at full frame rate and open in about half a second; editing a prompt or a state no longer redraws the whole canvas.
+
+**Which model runs the steps? Do I need another API key?**
+The plugin calls no model of its own and has no preference: the executor is the model configured in your current DSH session. Wiring subscription tools like Codex or Claude Code into the execution environment is being explored ([#3](https://github.com/Minglink/dsh-jailbreak-workflow/issues/3)).
+
+**Where do workflows and outputs live?**
+Files that travel with a workflow default to `~/.dsh/workflow-lite/assets/<workflow name>/` and move with it when you rename or export; each run's outputs go to the configured output root, by default `.workflow-lite/runs/<instance id>/out` in the current workspace. See [Path variables](#-path-variables).
+
+**How does this relate to dsh-workflows?**
+This repo is the plugin (canvas and compiler); [dsh-workflows](https://github.com/Minglink/dsh-workflows) is the collection of ready-made workflows. Install the plugin, download a `.wflite.zip` from the collection, and import it from the Workflow hub.
 
 ## ⚙️ How it works
 
